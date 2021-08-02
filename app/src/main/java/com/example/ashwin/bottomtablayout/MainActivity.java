@@ -1,15 +1,15 @@
 package com.example.ashwin.bottomtablayout;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Fragment selectedFragment = null;
@@ -33,19 +32,22 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = ItemThreeFragment.newInstance();
                                 break;
                         }
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
+
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.frame_layout, selectedFragment)
+                                .commit();
                         return true;
                     }
                 });
 
-        //Manually displaying the first fragment - one time only
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
-        transaction.commit();
+        // Manually displaying the first fragment - one time only
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, ItemOneFragment.newInstance())
+                .commit();
 
-        //Used to select an item programmatically
+        // Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
     }
 }
